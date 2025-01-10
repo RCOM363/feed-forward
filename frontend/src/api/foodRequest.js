@@ -38,7 +38,7 @@ export const deleteFoodRequest = async (id) => {
 };
 
 export const fulfillFoodRequest = async (id) => {
-  const response = await axiosInstance.patch(
+  const response = await axiosInstance.post(
     `/foodRequest/fulfill-request/${id}`
   );
   return response.data.data;
