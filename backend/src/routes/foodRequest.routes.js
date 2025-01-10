@@ -36,6 +36,6 @@ router.route("/get-requests").get(verifyJWT, isDonor, getFoodRequests);
 
 router
   .route("/fulfill-request/:requestId")
-  .patch(verifyJWT, isDonor, fulfillFoodRequest);
+  .post(verifyJWT, isDonor, fulfillFoodRequest);
 
 export default router;
