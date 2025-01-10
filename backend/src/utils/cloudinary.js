@@ -28,9 +28,11 @@ const uploadOnCloudinary = async (localFilePath, folder = null) => {
 
 const deleteFromCloudinary = async (url) => {
   try {
-    const parts = url.split("/");
-    const fileWithExtension = parts[parts.length - 1]; // Get the last part (e.g., image.jpg)
-    const publicId = fileWithExtension.split(".")[0]; // Remove file extension
+    const parts = url.split("/"); // split URL into parts
+    const fileWithExtension = parts.pop(); // get the file name with extension
+    const folderPath = parts.slice(7).join("/"); // Extract folder name
+    const publicId = `${folderPath}/${fileWithExtension.split(".")[0]}`;
+    console.log(publicId);
 
     const response = await cloudinary.uploader.destroy(publicId);
 
