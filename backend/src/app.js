@@ -32,7 +32,6 @@ import adminRouter from "./routes/admin.routes.js";
 import cityAdminRouter from "./routes/cityAdmin.routes.js";
 import userRouter from "./routes/user.routes.js";
 import foodPostRouter from "./routes/foodPost.routes.js";
-import postRequestRouter from "./routes/postRequest.routes.js";
 import foodRequestRouter from "./routes/foodRequest.routes.js";
 import donationRouter from "./routes/donation.routes.js";
 
@@ -41,7 +40,6 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/cityAdmin", cityAdminRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/foodPost", foodPostRouter);
-app.use(".api/v1/postRequest", postRequestRouter);
 app.use("/api/v1/foodRequest", foodRequestRouter);
 app.use("/api/v1/donation", donationRouter);
 
