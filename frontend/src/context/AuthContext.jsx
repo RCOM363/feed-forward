@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -9,9 +10,28 @@ const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (location.pathname === "/dashboard") {
+          setIsLoading(true);
+          const res = await userProfile.refetch();
+          setUser(res.data);
+          setIsLoading(false);
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const { mutate: login, isPending: isLoginPending } = useMutation({
     mutationFn: loginUser,
@@ -50,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, login, isLoginPending, logout }}
+      value={{ user, setUser, login, isLoginPending, logout, isLoading }}
     >
       {children}
     </AuthContext.Provider>

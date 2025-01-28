@@ -18,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          {/* protected routes */}
           <Route
             path="/dashboard"
             element={
@@ -34,6 +35,15 @@ function App() {
               <ProtectedRoute allowedRoles={["Recipient"]}>
                 <DonationComplete />
               </ProtectedRoute>
+            }
+          />
+          {/* 404 */}
+          <Route
+            path="*"
+            element={
+              <div className="w-screen h-screen flex justify-center items-center">
+                <h1 className="text-3xl font-bold">404 Not Found</h1>
+              </div>
             }
           />
         </Routes>
