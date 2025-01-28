@@ -1,5 +1,4 @@
 import React from "react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
