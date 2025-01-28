@@ -1,24 +1,9 @@
-import React from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import React from "react";
 
-import { logoutUser } from '../api/users';
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
-
-  const navigate = useNavigate()
-
-  const {mutate:logout} = useMutation({
-    mutationFn: logoutUser,
-    onSuccess: () => {
-      toast.success('Logout successful');
-      navigate('/login');
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  })
+  const { logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -48,4 +33,3 @@ function Header() {
 }
 
 export default Header;
-
