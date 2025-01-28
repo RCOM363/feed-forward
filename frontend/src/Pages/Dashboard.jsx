@@ -11,7 +11,7 @@ import DonorDashboard from "../components/dashboardComponents/DonorDashboard";
 import RecipientDashboard from "../components/dashboardComponents/RecipientDashboard";
 
 function Dashboard() {
-  const { user, userProfile } = useAuth();
+  const { user } = useAuth();
 
   const roleComponents = {
     Admin: <AdminDashboard />,
