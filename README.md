@@ -109,20 +109,3 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ## Donation complete page (changes donation status to completed)
 
 ![donation-complete](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete.png)
-
-## Mobile view
-
-**Home page**
-<br>
-![homepage](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-homepage.png)
-
-**Login**
-<br>
-![login](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-login.png)
-
-**Admin dashboard**
-<br>
-![admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-admin-dashboard.png)
-![city-admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-city-admin-dashboard.png)
-![donor-dashboard](frontend\public\mobile-donor-dashboard.png)
-![recipient-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-recipient-dashboard.png)
