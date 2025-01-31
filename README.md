@@ -79,35 +79,35 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 **Recipient signup**
 ![recipient-signup](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/recipient-signup.png)
 
-## Admin dashboard
+### Admin dashboard
 
 ![admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/admin-dashboard-ezgif.png)
 
 **Add city admin modal**
 ![addcityadminmodal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/add-city-admin-modal.png)
 
-## City admin dashboard
+### City admin dashboard
 
 ![city-admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/city-admin-dashboard.png)
 
-## Donor dashboard
+### Donor dashboard
 
 ![donor-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donor-dashboard.png)
 
 **Food post modal**
 ![food-post-modal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/food-post-modal.png)
 
-## Recipient dashboard
+### Recipient dashboard
 
 ![recipient-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/recipient-dashboard.png)
 
 **Food request modal**
 ![food-request-modal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/food-request-modal.png)
 
-## Mail received by donor after donation is set in-progress
+### Mail received by donor after donation is set in-progress
 
 ![donation-complete-qr](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete-qr.png)
 
-## Donation complete page (changes donation status to completed)
+### Donation complete page (changes donation status to completed)
 
 ![donation-complete](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete.png)
