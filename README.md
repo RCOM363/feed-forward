@@ -1,3 +1,4 @@
+<a id="top"></a>
 # FeedForward
 
 FeedForward is a food donation platform built using the MERN stack, designed to bridge the gap between surplus food and those in need. The platform enables donors to share excess food, recipients to request food. QR codes and email notifications streamline the food distribution process.
@@ -14,6 +15,12 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![Node.JS](https://img.shields.io/badge/Node.js-5FA04E.svg?style=for-the-badge&logo=nodedotjs&logoColor=white)![Express](https://img.shields.io/badge/Express-000000.svg?style=for-the-badge&logo=Express&logoColor=white)![MongoDB](https://img.shields.io/badge/MongoDB-47A248.svg?style=for-the-badge&logo=MongoDB&logoColor=white)![Mongoose](https://img.shields.io/badge/Mongoose-880000.svg?style=for-the-badge&logo=Mongoose&logoColor=white)![JWT](https://img.shields.io/badge/JSON%20Web%20Tokens-000000.svg?style=for-the-badge&logo=JSON-Web-Tokens&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5.svg?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
+## Table of contents
+- [Features](https://github.com/RCOM363/feed-forward#features)
+- [Platform workflow](https://github.com/RCOM363/feed-forward#platform-workflow)
+- [Contributors](https://github.com/RCOM363/feed-forward#contributors)
+- [Preview](https://github.com/RCOM363/feed-forward#preview)
+- [API documentation](https://github.com/RCOM363/feed-forward#api-documentation)
 
 ## Features
 
@@ -56,7 +63,6 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 <a href="https://github.com/RCOM363/feed-forward/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=RCOM363/feed-forward" />
 </a>
-
 
 ## Preview
 
@@ -111,3 +117,288 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ### Donation complete page (changes donation status to completed)
 
 ![donation-complete](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete.png)
+
+## API Documentation
+
+## Table of contents
+- [schema](https://github.com/RCOM363/feed-forward#schema)
+- [user](https://github.com/RCOM363/feed-forward#user)
+- [city admin](https://github.com/RCOM363/feed-forward#city-admin)
+- [food post](https://github.com/RCOM363/feed-forward#food-post)
+- [food request](https://github.com/RCOM363/feed-forward#food-request)
+- [admin](https://github.com/RCOM363/feed-forward#admin)
+
+## Schema
+![schema](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/feedforward.drawio.png)
+
+## User Authentication & Management
+
+### Donor Signup
+
+- **URL:** `/api/v1/users/donor-signup`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+avatar: [file]
+username: [string]
+email: [string]
+phoneNo: [string]
+password: [string]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+donorType: [individual/organization]
+```
+
+### Recipient Signup
+
+- **URL:** `/api/v1/users/recipient-signup`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+avatarImage: [file]
+username: [string]
+email: [string]
+phoneNo: [string]
+password: [string]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+organizationType: [string]
+registrationNo: [string]
+```
+
+### Login
+
+- **URL:** `/api/v1/users/login`
+- **Method:** `POST`
+- **Body (JSON):**
+
+```json
+{
+  "email": "[string]",
+  "password": "[string]"
+}
+```
+
+### Get User Profile
+
+- **URL:** `/api/v1/users/get-user-profile`
+- **Method:** `GET`
+
+### Create City Admin
+
+- **URL:** `/api/v1/users/create-city-admin`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+username: [string]
+email: [string]
+phoneNo: [string]
+password: [string]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+```
+
+### Get Dashboard Data
+
+- **URL:** `/api/v1/users/get-dashboard-data`
+- **Method:** `GET`
+
+### Logout
+
+- **URL:** `/api/v1/users/logout`
+- **Method:** `POST`
+
+## City Admin
+
+### Verify Recipient
+
+- **URL:** `/api/v1/cityAdmin/verify-recipient/`
+- **Method:** `PATCH`
+
+### Get Food Requests
+
+- **URL:** `/api/v1/cityAdmin/get-food-requests`
+- **Method:** `GET`
+
+### Get Food Posts
+
+- **URL:** `/api/v1/cityAdmin/get-food-posts`
+- **Method:** `GET`
+
+### Get Verification List
+
+- **URL:** `/api/v1/cityAdmin/get-verification-list`
+- **Method:** `GET`
+
+### Reject Recipient
+
+- **URL:** `DELETE /api/v1/cityAdmin/verify-recipient/`
+- **Method:** `DELETE`
+
+## Food Post Management
+
+### Add Food Post
+
+- **URL:** `/api/v1/foodPost/add-post`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+images: [file(s)]
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+bestBefore: [date]
+useUserLocation: [true/false]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+```
+
+### Update Food Post
+
+- **URL:** `/api/v1/foodPost/update-post/:postId`
+- **Method:** `PATCH`
+- **Body (form-data):**
+
+```plaintext
+images: [file(s)]
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+bestBefore: [date]
+useUserLocation: [true/false]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+```
+
+### Delete Food Post
+
+- **URL:** `/api/v1/foodPost/delete-post/:postId`
+- **Method:** `DELETE`
+
+### Get Donor Posts
+
+- **URL:** `/api/v1/foodPost/get-donor-posts`
+- **Method:** `GET`
+
+### Get Available Posts
+
+- **URL:** `/api/v1/foodPost/get-available-posts`
+- **Method:** `GET`
+
+### Request Food
+
+- **URL:** `/api/v1/foodPost/request-food/`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+bestBefore: [date]
+useUserLocation: [true/false]
+coordinates: [latitude, longitude]
+address: [string]
+state: [string]
+city: [string]
+pincode: [string]
+```
+
+## Food Requests
+
+### Add Food Request
+
+- **URL:** `/api/v1/foodRequest/add-request`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+requiredBy: [date]
+```
+
+### Update Food Request
+
+- **URL:** `/api/v1/foodRequest/update-request/`
+- **Method:** `PATCH`
+- **Body (form-data):**
+
+```plaintext
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+requiredBy: [date]
+```
+
+### Delete Food Request
+
+- **URL:** `/api/v1/foodRequest/delete-request/:requestId`
+- **Method:** `DELETE`
+
+### Get All Requests
+
+- **URL:** `/api/v1/foodRequest/get-requests`
+- **Method:** `GET`
+
+### Get Recipient Requests
+
+- **URL:** `/api/v1/foodRequest/get-recipient-requests`
+- **Method:** `GET`
+
+### Fulfill Request
+
+- **URL:** `/api/v1/foodRequest/fulfill-request/`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+title: [string]
+description: [string]
+quantity: [number]
+quantityUnit: [string]
+foodType: [veg/non-veg]
+requiredBy: [date]
+```
+
+## Admin
+
+### Get City Admins
+
+- **URL:** `/api/v1/admin/get-city-admins`
+- **Method:** `GET`
+
+### Remove City Admin
+
+- **URL:** `/api/v1/admin/remove-city-admin/:id`
+- **Method:** `DELETE`
