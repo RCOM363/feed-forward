@@ -56,73 +56,73 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![Node.JS](https://img.shields.io/badge/Node.js-5FA04E.svg?style=for-the-badge&logo=nodedotjs&logoColor=white)![Express](https://img.shields.io/badge/Express-000000.svg?style=for-the-badge&logo=Express&logoColor=white)![MongoDB](https://img.shields.io/badge/MongoDB-47A248.svg?style=for-the-badge&logo=MongoDB&logoColor=white)![Mongoose](https://img.shields.io/badge/Mongoose-880000.svg?style=for-the-badge&logo=Mongoose&logoColor=white)![JWT](https://img.shields.io/badge/JSON%20Web%20Tokens-000000.svg?style=for-the-badge&logo=JSON-Web-Tokens&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5.svg?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
-## Screenshots
+## Preview
 
 ### Home page
 
-![homepage](frontend\public\homepage.png)
+![homepage](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/homepage.png)
 
 ### Login page
 
-![loginpage](frontend\public\login.png)
+![loginpage](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/login.png)
 
 ### Sign pages
 
 **User role selection**
-![userroleselection](frontend\public\signup-1.png)
+![userroleselection](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/signup-1.png)
 
 **Donor signup**
-![donor-signup](frontend\public\donor-signup.png)
+![donor-signup](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donor-signup.png)
 
 **Recipient signup**
-![recipient-signup](frontend\public\recipient-signup.png)
+![recipient-signup](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/recipient-signup.png)
 
 ## Admin dashboard
 
-![admin-dashboard](frontend\public\admin-dashboard-ezgif.png)
+![admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/admin-dashboard-ezgif.png)
 
 **Add city admin modal**
-![addcityadminmodal](frontend\public\add-city-admin-modal.png)
+![addcityadminmodal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/add-city-admin-modal.png)
 
 ## City admin dashboard
 
-![city-admin-dashboard](frontend\public\city-admin-dashboard.png)
+![city-admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/city-admin-dashboard.png)
 
 ## Donor dashboard
 
-![donor-dashboard](frontend\public\donor-dashboard.png)
+![donor-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donor-dashboard.png)
 
 **Food post modal**
-![food-post-modal](frontend\public\food-post-modal.png)
+![food-post-modal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/food-post-modal.png)
 
 ## Recipient dashboard
 
-![recipient-dashboard](frontend\public\recipient-dashboard.png)
+![recipient-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/recipient-dashboard.png)
 
 **Food request modal**
-![food-request-modal](frontend\public\food-request-modal.png)
+![food-request-modal](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/food-request-modal.png)
 
 ## Mail received by donor after donation is set in-progress
 
-![donation-complete-qr](frontend\public\donation-complete-qr.png)
+![donation-complete-qr](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete-qr.png)
 
 ## Donation complete page (changes donation status to completed)
 
-![donation-complete](frontend\public\donation-complete.png)
+![donation-complete](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/donation-complete.png)
 
 ## Mobile view
 
 **Home page**
 <br>
-![homepage](frontend\public\mobile-homepage.png)
+![homepage](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-homepage.png)
 
 **Login**
 <br>
-![login](frontend\public\mobile-login.png)
+![login](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-login.png)
 
 **Admin dashboard**
 <br>
-![admin-dashboard](frontend\public\mobile-admin-dashboard.png)
-![city-admin-dashboard](frontend\public\mobile-city-admin-dashboard.png)
+![admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-admin-dashboard.png)
+![city-admin-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-city-admin-dashboard.png)
 ![donor-dashboard](frontend\public\mobile-donor-dashboard.png)
-![recipient-dashboard](frontend\public\mobile-recipient-dashboard.png)
+![recipient-dashboard](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/mobile-recipient-dashboard.png)
