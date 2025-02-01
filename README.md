@@ -21,6 +21,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5.svg?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
 ## Table of Contents
+
 - [Features](https://github.com/RCOM363/feed-forward#features)
 - [Platform workflow](https://github.com/RCOM363/feed-forward#platform-workflow)
 - [Contributors](https://github.com/RCOM363/feed-forward#contributors)
@@ -57,6 +58,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 [<a href="#top">back to top</a>]
 
 ## Platform Workflow
+
 - The **Admin** assigns a **City Admin** to a specific city. The platform will not be available in a city unless a City Admin has been assigned.
 - Once the platform is available, both **Donors** and **Recipients** can sign up.
 - The **City Admin** receives notifications for every recipient signup and must verify their credentials and authenticity to prevent misuse of the platform.
@@ -133,15 +135,16 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ## API Documentation
 
 ### Schema
+
 ![schema](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/feedforward.drawio.png)
 
 ### Routes
+
 - [User](https://github.com/RCOM363/feed-forward#user)
 - [City Ddmin](https://github.com/RCOM363/feed-forward#city-admin)
 - [Food Post](https://github.com/RCOM363/feed-forward#food-post)
 - [Food Request](https://github.com/RCOM363/feed-forward#food-request)
 - [Admin](https://github.com/RCOM363/feed-forward#admin)
-
 
 ### User Authentication & Management
 
@@ -186,19 +189,6 @@ organizationType: [string]
 registrationNo: [string]
 ```
 
-#### Login
-
-- **URL:** `/api/v1/users/login`
-- **Method:** `POST`
-- **Body (JSON):**
-
-```json
-{
-  "email": "[string]",
-  "password": "[string]"
-}
-```
-
 #### Get User Profile
 
 - **URL:** `/api/v1/users/get-user-profile`
@@ -220,6 +210,17 @@ address: [string]
 state: [string]
 city: [string]
 pincode: [string]
+```
+
+#### Login
+
+- **URL:** `/api/v1/users/login`
+- **Method:** `POST`
+- **Body (form-data):**
+
+```plaintext
+email: [string]
+password: [string]
 ```
 
 #### Get Dashboard Data
