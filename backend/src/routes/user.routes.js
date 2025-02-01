@@ -17,7 +17,7 @@ router.route("/donor-signup").post(upload.single("avatarImage"), donorSignUp);
 router
   .route("/recipient-signup")
   .post(upload.single("avatarImage"), recipientSignUp);
-router.route("/login").post(userLogin);
+router.route("/login").post(upload.none(), userLogin);
 
 // secured routes
 router.route("/logout").post(verifyJWT, userLogout);
