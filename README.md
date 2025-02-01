@@ -1,4 +1,5 @@
 <a id="top"></a>
+
 # FeedForward
 
 FeedForward is a food donation platform built using the MERN stack, designed to bridge the gap between surplus food and those in need. The platform enables donors to share excess food, recipients to request food. QR codes and email notifications streamline the food distribution process.
@@ -16,6 +17,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5.svg?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
 ## Table of contents
+
 - [Features](https://github.com/RCOM363/feed-forward#features)
 - [Platform workflow](https://github.com/RCOM363/feed-forward#platform-workflow)
 - [Contributors](https://github.com/RCOM363/feed-forward#contributors)
@@ -50,6 +52,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 - React Query is used for efficient API calls.
 
 ## Platform workflow
+
 - The **Admin** assigns a **City Admin** to a specific city. The platform will not be available in a city unless a City Admin has been assigned.
 - Once the platform is available, both **Donors** and **Recipients** can sign up.
 - The **City Admin** receives notifications for every recipient signup and must verify their credentials and authenticity to prevent misuse of the platform.
@@ -60,6 +63,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 - The **Recipient** must collect the donation from the specified location and scan the QR Code (sent to the Donor via email) to mark the donation as Completed.
 
 ## Contributors
+
 <a href="https://github.com/RCOM363/feed-forward/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=RCOM363/feed-forward" />
 </a>
@@ -121,6 +125,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ## API Documentation
 
 ## Table of contents
+
 - [schema](https://github.com/RCOM363/feed-forward#schema)
 - [user](https://github.com/RCOM363/feed-forward#user)
 - [city admin](https://github.com/RCOM363/feed-forward#city-admin)
@@ -129,6 +134,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 - [admin](https://github.com/RCOM363/feed-forward#admin)
 
 ## Schema
+
 ![schema](https://github.com/RCOM363/feed-forward/blob/main/frontend/public/feedforward.drawio.png)
 
 ## User Authentication & Management
@@ -174,24 +180,6 @@ organizationType: [string]
 registrationNo: [string]
 ```
 
-### Login
-
-- **URL:** `/api/v1/users/login`
-- **Method:** `POST`
-- **Body (JSON):**
-
-```json
-{
-  "email": "[string]",
-  "password": "[string]"
-}
-```
-
-### Get User Profile
-
-- **URL:** `/api/v1/users/get-user-profile`
-- **Method:** `GET`
-
 ### Create City Admin
 
 - **URL:** `/api/v1/users/create-city-admin`
@@ -209,6 +197,22 @@ state: [string]
 city: [string]
 pincode: [string]
 ```
+
+### Login
+
+- **URL:** `/api/v1/users/login`
+- **Method:** `POST`
+- **Body (JSON):**
+
+```plaintext
+email: [string]
+password: [string]
+```
+
+### Get User Profile
+
+- **URL:** `/api/v1/users/get-user-profile`
+- **Method:** `GET`
 
 ### Get Dashboard Data
 

@@ -5,13 +5,15 @@ import BeatLoader from "react-spinners/BeatLoader";
 import FormWrapper from "../components/formComponents/FormWrapper";
 import Input from "../components/formComponents/Input";
 import { loginSchema } from "../utils/validations";
+import { createFormData } from "../utils/createFormData";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const { login, isLoginPending } = useAuth();
 
   const handleSubmit = (data) => {
-    login(data);
+    const formData = createFormData(data);
+    login(formData);
   };
 
   return (
