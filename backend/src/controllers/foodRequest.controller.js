@@ -143,9 +143,18 @@ const updateUserFoodRequests = asyncHandler(async (id) => {
 })
 
 const getRecipientFoodRequests = asyncHandler(async (req, res) => {
+  const {page, limit} = req.query;
   // update status of expired food requests
   await updateUserFoodRequests(req.user._id);
-  const foodRequests = await FoodRequest.find({ requestedBy: req.user._id });
+
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
+  const skip = (pageNumber - 1) * limitNumber;
+
+  const foodRequests = await FoodRequest.find({ requestedBy: req.user._id })
+    .skip(skip)
+    .limit(limitNumber)
+    .sort({ createdAt: -1 });
 
   console.log("Food requests fetched successfully");
 
@@ -172,12 +181,21 @@ const updateCityFoodRequests = asyncHandler(async (city) => {
 })
 
 const getFoodRequests = asyncHandler(async (req, res) => {
+  const {page, limit} = req.query;
   // update status of expired food requests
   await updateCityFoodRequests(req.user.location.properties.city);
+
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
+  const skip = (pageNumber - 1) * limitNumber;
+
   const foodRequests = await FoodRequest.find({
     "location.properties.city": req.user.location.properties.city,
     status: "unfulfilled",
-  });
+  })
+    .skip(skip)
+    .limit(limitNumber)
+    .sort({ createdAt: -1 });
 
   console.log("Food requests fetched successfully");
 

@@ -239,10 +239,20 @@ const updateUserFoodPosts =  asyncHandler(async (id) => {
 })
 
 const getDonorFoodPosts = asyncHandler(async (req, res) => {
+
+  const {page,limit} = req.query;
+
   // update posts if they are expired
   await updateUserFoodPosts(req.user._id);
 
-  const foodPosts = await FoodPost.find({ postedBy: req.user._id });
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
+  const skip = (pageNumber - 1) * limitNumber;
+
+  const foodPosts = await FoodPost.find({ postedBy: req.user._id })
+    .skip(skip)
+    .limit(limitNumber)
+    .sort({ createdAt: -1 });
 
   console.log("Food posts fetched successfully");
 
@@ -259,7 +269,7 @@ const updateCityFoodPosts = asyncHandler(async (city) => {
     {
       "location.properties.city": city,
       bestBefore: { $lt: currentDate },
-      status: { $nin: ["expired","donated"] }, // Only update non-expired posts
+      status: { $nin: ["expired","donated"] },
     },
     { $set: { status: "expired" } }
   );
@@ -274,13 +284,23 @@ const updateCityFoodPosts = asyncHandler(async (city) => {
 });
 
 const getAvailableFoodPosts = asyncHandler(async (req, res) => {
+
+  const { page, limit } = req.query;
+
   // update expired food posts
   await updateCityFoodPosts(req.user.location.properties.city);
+
+  const pageNumber = parseInt(page, 10);
+  const limitNumber = parseInt(limit, 10);
+  const skip = (pageNumber - 1) * limitNumber;
 
   const foodPosts = await FoodPost.find({
     "location.properties.city": req.user.location.properties.city,
     status: "available",
-  });
+  })
+    .skip(skip)
+    .limit(limitNumber)
+    .sort({ createdAt: -1 });
 
   console.log("Available food posts fetched successfully");
 
