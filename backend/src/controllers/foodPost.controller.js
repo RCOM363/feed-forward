@@ -222,7 +222,26 @@ const deleteFoodPost = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Food post deleted successfully"));
 });
 
+const updateUserFoodPosts =  asyncHandler(async (id) => {
+  const currentDate = new Date();
+  const updateStatus = await FoodPost.updateMany({
+    postedBy: id,
+    bestBefore: { $lt: currentDate },
+    status: { $nin: ["expired","donated"] }, 
+  }, { $set: { status: "expired" }
+  });
+
+  if(!updateStatus) {
+    throw new ApiError(500, "Something went wrong while updating food posts status of an user");
+  }
+  
+  console.log(`${updateStatus.modifiedCount} food posts were marked as expired.`);
+})
+
 const getDonorFoodPosts = asyncHandler(async (req, res) => {
+  // update posts if they are expired
+  await updateUserFoodPosts(req.user._id);
+
   const foodPosts = await FoodPost.find({ postedBy: req.user._id });
 
   console.log("Food posts fetched successfully");
@@ -232,27 +251,31 @@ const getDonorFoodPosts = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, foodPosts, "Food posts fetched successfully"));
 });
 
-const updateExpiredFoodPosts = asyncHandler(async (city) => {
+const updateCityFoodPosts = asyncHandler(async (city) => {
   const currentDate = new Date();
 
   // query to update expired food posts
-  const result = await FoodPost.updateMany(
+  const updateStatus = await FoodPost.updateMany(
     {
       "location.properties.city": city,
-      expiryDate: { $lte: currentDate },
-      status: { $ne: "expired" }, // Only update non-expired posts
+      bestBefore: { $lt: currentDate },
+      status: { $nin: ["expired","donated"] }, // Only update non-expired posts
     },
     { $set: { status: "expired" } }
   );
 
+  if(!updateStatus) {
+    throw new ApiError(500, "Something went wrong while updating food posts status in a city");
+  }
+
   console.log(
-    `${result.modifiedCount} food posts in city '${city}' were marked as expired.`
+    `${updateStatus.modifiedCount} food posts in city '${city}' were marked as expired.`
   );
 });
 
 const getAvailableFoodPosts = asyncHandler(async (req, res) => {
   // update expired food posts
-  await updateExpiredFoodPosts(req.user.location.properties.city);
+  await updateCityFoodPosts(req.user.location.properties.city);
 
   const foodPosts = await FoodPost.find({
     "location.properties.city": req.user.location.properties.city,

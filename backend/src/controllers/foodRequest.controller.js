@@ -127,7 +127,24 @@ const deleteFoodRequest = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Food request deleted successfully"));
 });
 
+const updateUserFoodRequests = asyncHandler(async (id) => {
+  const currentDate = new Date();
+  const updateStatus = await FoodRequest.updateMany({
+    requestedBy: id,
+    requiredBy:{ $lt: currentDate },
+    status:{$nin:["fulfilled","expired"]}
+  }, { $set: { status: "expired" }
+  })
+   if (!updateStatus) {
+    throw new ApiError(500, "Something went wrong while updating food request status of an user");
+   }
+
+   console.log(`${updateStatus.modifiedCount} food requests were marked expired`);
+})
+
 const getRecipientFoodRequests = asyncHandler(async (req, res) => {
+  // update status of expired food requests
+  await updateUserFoodRequests(req.user._id);
   const foodRequests = await FoodRequest.find({ requestedBy: req.user._id });
 
   console.log("Food requests fetched successfully");
@@ -139,7 +156,24 @@ const getRecipientFoodRequests = asyncHandler(async (req, res) => {
     );
 });
 
+const updateCityFoodRequests = asyncHandler(async (city) => {
+  const currentDate = new Date();
+  const updateStatus = await FoodRequest.updateMany({
+    "location.properties.city": city,
+    requiredBy:{ $lt: currentDate },
+    status:{$nin:["fulfilled","expired"]}
+  }, { $set: { status: "expired" }
+  })
+   if (!updateStatus) {
+    throw new ApiError(500, "Something went wrong while updating food request status of a city");
+   }
+
+   console.log(`${updateStatus.modifiedCount} food requests were marked expired`);
+})
+
 const getFoodRequests = asyncHandler(async (req, res) => {
+  // update status of expired food requests
+  await updateCityFoodRequests(req.user.location.properties.city);
   const foodRequests = await FoodRequest.find({
     "location.properties.city": req.user.location.properties.city,
     status: "unfulfilled",

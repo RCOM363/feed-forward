@@ -38,7 +38,7 @@ const foodRequestSchema = new Schema({
   location: locationSchema,
   status: {
     type: String,
-    enum: ["unfulfilled", "in-progress", "fulfilled"],
+    enum: ["unfulfilled", "in-progress", "fulfilled", "expired"],
   },
 });
 
