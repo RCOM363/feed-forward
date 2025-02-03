@@ -5,8 +5,8 @@ export const fetchFoodPosts = async () => {
   return response.data.data;
 };
 
-export const fetchDonorFoodPosts = async () => {
-  const response = await axiosInstance.get("/foodPost/get-donor-posts");
+export const fetchDonorFoodPosts = async (currentPage,limit) => {
+  const response = await axiosInstance.get(`/foodPost/get-donor-posts?page=${currentPage}&limit=${limit}`);
   return response.data.data;
 };
 

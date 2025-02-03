@@ -245,8 +245,8 @@ const getDonorFoodPosts = asyncHandler(async (req, res) => {
   // update posts if they are expired
   await updateUserFoodPosts(req.user._id);
 
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const pageNumber = parseInt(page, 10) || 1;
+  const limitNumber = parseInt(limit, 10) || 2;
   const skip = (pageNumber - 1) * limitNumber;
 
   const foodPosts = await FoodPost.find({ postedBy: req.user._id })
@@ -254,11 +254,20 @@ const getDonorFoodPosts = asyncHandler(async (req, res) => {
     .limit(limitNumber)
     .sort({ createdAt: -1 });
 
+  const totalFoodPosts = await FoodPost.countDocuments({ postedBy: req.user._id });
+
   console.log("Food posts fetched successfully");
 
   return res
     .status(200)
-    .json(new ApiResponse(200, foodPosts, "Food posts fetched successfully"));
+    .json(new ApiResponse(200, 
+      {
+        foodPosts, 
+        currentPage: pageNumber, 
+        totalPages: Math.ceil(totalFoodPosts/limitNumber)
+      }, 
+      "Food posts fetched successfully")
+    );
 });
 
 const updateCityFoodPosts = asyncHandler(async (city) => {
@@ -290,8 +299,8 @@ const getAvailableFoodPosts = asyncHandler(async (req, res) => {
   // update expired food posts
   await updateCityFoodPosts(req.user.location.properties.city);
 
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const pageNumber = parseInt(page, 10) || 1;
+  const limitNumber = parseInt(limit, 10) || 2;
   const skip = (pageNumber - 1) * limitNumber;
 
   const foodPosts = await FoodPost.find({
@@ -302,6 +311,11 @@ const getAvailableFoodPosts = asyncHandler(async (req, res) => {
     .limit(limitNumber)
     .sort({ createdAt: -1 });
 
+  const totalAvaialbleFoodPosts = await FoodPost.countDocuments({
+    "location.properties.city": req.user.location.properties.city,
+    status: "available",
+  });
+
   console.log("Available food posts fetched successfully");
 
   return res
@@ -309,7 +323,11 @@ const getAvailableFoodPosts = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        foodPosts,
+        {
+          foodPosts,
+          currentPage: pageNumber,
+          totalPages: Math.ceil(totalAvaialbleFoodPosts / limitNumber),
+        },
         "Available food posts fetched successfully"
       )
     );

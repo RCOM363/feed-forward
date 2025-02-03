@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const fetchFoodRequests = async () => {
-  const response = await axiosInstance.get("/foodRequest/get-requests");
+export const fetchFoodRequests = async (currentPage,limit) => {
+  const response = await axiosInstance.get(`/foodRequest/get-requests?page=${currentPage}&limit=${limit}`);
   return response.data.data;
 };
 
