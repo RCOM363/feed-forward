@@ -9,8 +9,9 @@ import { deletePost, requestFood } from "../../api/foodPosts";
 import { parseErrorMessage } from "../../utils/parseErrorMessage";
 import FoodPostModal from "./FoodPostModal";
 import ImageSlider from "./ImageSlider";
+import Pagination from "./Pagination";
 
-const FoodPost = ({ foodPosts, userRole }) => {
+const FoodPost = ({ posts,isLoading,currentPage, setCurrentPage, userRole }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
 
@@ -59,92 +60,101 @@ const FoodPost = ({ foodPosts, userRole }) => {
             Add New Post
           </button>
         )}
-        <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
-          {foodPosts &&
-            foodPosts.map((post) => (
-              <div
-                key={post._id}
-                className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out"
-              >
-                <ImageSlider images={post.images} />
-                <h3 className="text-2xl font-semibold text-gray-800 mb-2 ">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{post.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                    Quantity: {post.quantity}
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      post.foodType.toLowerCase() === "veg"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {post.foodType}
-                  </span>
-                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
-                    {post.status}
-                  </span>
-                </div>
-                <p className="text-gray-600 mb-4 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {post.location.properties.address}
-                </p>
-                {userRole === "Donor" && (
-                  <div className="flex space-x-2">
-                    <button
-                      className="flex-1 py-2 px-4 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 flex items-center justify-center"
-                      onClick={() => {
-                        setEditingPost(post);
-                        setIsOpen(true);
-                      }}
+        {
+          !isLoading && (
+            <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
+            {posts?.foodPosts &&
+              posts.foodPosts.map((post) => (
+                <div
+                  key={post._id}
+                  className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out"
+                >
+                  <ImageSlider images={post.images} />
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-2 ">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{post.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                      Quantity: {post.quantity}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        post.foodType.toLowerCase() === "veg"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
                     >
-                      <FiEdit2 className="mr-2" />
-                      Edit
-                    </button>
-                    <button
-                      className="flex-1 py-2 px-4 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300 ease-in-out flex items-center justify-center"
-                      onClick={() => {
-                        deletePostMutation.mutate(post._id);
-                      }}
+                      {post.foodType}
+                    </span>
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+                      {post.status}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4 flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
                     >
-                      <FiTrash2 className="mr-2" />
-                      {deletePostMutation.isPending ? (
+                      <path
+                        fillRule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {post.location.properties.address}
+                  </p>
+                  {userRole === "Donor" && (
+                    <div className="flex space-x-2">
+                      <button
+                        className="flex-1 py-2 px-4 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 flex items-center justify-center"
+                        onClick={() => {
+                          setEditingPost(post);
+                          setIsOpen(true);
+                        }}
+                      >
+                        <FiEdit2 className="mr-2" />
+                        Edit
+                      </button>
+                      <button
+                        className="flex-1 py-2 px-4 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300 ease-in-out flex items-center justify-center"
+                        onClick={() => {
+                          deletePostMutation.mutate(post._id);
+                        }}
+                      >
+                        <FiTrash2 className="mr-2" />
+                        {deletePostMutation.isPending ? (
+                          <BeatLoader color="#fff" size={8} />
+                        ) : (
+                          "Delete"
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  {userRole === "Recipient" && (
+                    <button
+                      className="w-full mt-4 py-2 px-4 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300 ease-in-out"
+                      onClick={() => requestFoodMutation.mutate(post._id)}
+                    >
+                      {requestFoodMutation.isPending ? (
                         <BeatLoader color="#fff" size={8} />
                       ) : (
-                        "Delete"
+                        "Request Food"
                       )}
                     </button>
-                  </div>
-                )}
-                {userRole === "Recipient" && (
-                  <button
-                    className="w-full mt-4 py-2 px-4 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300 ease-in-out"
-                    onClick={() => requestFoodMutation.mutate(post._id)}
-                  >
-                    {requestFoodMutation.isPending ? (
-                      <BeatLoader color="#fff" size={8} />
-                    ) : (
-                      "Request Food"
-                    )}
-                  </button>
-                )}
+                  )}
               </div>
             ))}
         </div>
+          )
+        }
+        <Pagination 
+          totalPages={posts?.totalPages} 
+          currentPage={currentPage} 
+          onPageChange={setCurrentPage} 
+        />
       </div>
       {isOpen && <FoodPostModal setIsOpen={setIsOpen} post={editingPost} />}
     </>

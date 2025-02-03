@@ -147,8 +147,8 @@ const getRecipientFoodRequests = asyncHandler(async (req, res) => {
   // update status of expired food requests
   await updateUserFoodRequests(req.user._id);
 
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const pageNumber = parseInt(page, 10) || 1;
+  const limitNumber = parseInt(limit, 10) || 2;
   const skip = (pageNumber - 1) * limitNumber;
 
   const foodRequests = await FoodRequest.find({ requestedBy: req.user._id })
@@ -156,12 +156,20 @@ const getRecipientFoodRequests = asyncHandler(async (req, res) => {
     .limit(limitNumber)
     .sort({ createdAt: -1 });
 
+  const totalFoodRequests = await FoodRequest.countDocuments({ requestedBy: req.user._id });
+
   console.log("Food requests fetched successfully");
 
   return res
     .status(200)
     .json(
-      new ApiResponse(200, foodRequests, "Food requests fetched successfully")
+      new ApiResponse(200, 
+        {
+          foodRequests,
+          currentPage: pageNumber,
+          totalPages: Math.ceil(totalFoodRequests / limitNumber),
+        }
+        , "Food requests fetched successfully")
     );
 });
 
@@ -185,8 +193,8 @@ const getFoodRequests = asyncHandler(async (req, res) => {
   // update status of expired food requests
   await updateCityFoodRequests(req.user.location.properties.city);
 
-  const pageNumber = parseInt(page, 10);
-  const limitNumber = parseInt(limit, 10);
+  const pageNumber = parseInt(page, 10) || 1;
+  const limitNumber = parseInt(limit, 10) || 2;
   const skip = (pageNumber - 1) * limitNumber;
 
   const foodRequests = await FoodRequest.find({
@@ -197,12 +205,23 @@ const getFoodRequests = asyncHandler(async (req, res) => {
     .limit(limitNumber)
     .sort({ createdAt: -1 });
 
+  const totalUnfulfilledFoodRequests = await FoodRequest.countDocuments({
+    "location.properties.city": req.user.location.properties.city,
+    status: "unfulfilled",
+  });
+
   console.log("Food requests fetched successfully");
 
   return res
     .status(200)
     .json(
-      new ApiResponse(200, foodRequests, "Food requests fetched successfully")
+      new ApiResponse(200, 
+        {
+          foodRequests,
+          currentPage: pageNumber,
+          totalPages: Math.ceil(totalUnfulfilledFoodRequests / limitNumber),
+        }, 
+        "Food requests fetched successfully")
     );
 });
 

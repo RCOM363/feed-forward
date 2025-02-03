@@ -10,8 +10,9 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { deleteFoodRequest, fulfillFoodRequest } from "../../api/foodRequest";
 import { parseErrorMessage } from "../../utils/parseErrorMessage";
 import FoodRequestModal from "./FoodRequestModal";
+import Pagination from "./Pagination";
 
-const FoodRequest = ({ foodRequests, userRole }) => {
+const FoodRequest = ({ requests,isLoading,currentPage,setCurrentPage, userRole }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingRequest, setEditingRequest] = useState(null);
 
@@ -60,9 +61,11 @@ const FoodRequest = ({ foodRequests, userRole }) => {
             Add New Request
           </button>
         )}
-        <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
-          {foodRequests &&
-            foodRequests.map((request) => (
+        {
+          !isLoading && (
+            <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
+          {requests?.foodRequests &&
+            requests.foodRequests.map((request) => (
               <div
                 key={request._id}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl  "
@@ -145,6 +148,13 @@ const FoodRequest = ({ foodRequests, userRole }) => {
               </div>
             ))}
         </div>
+          )
+        }
+        <Pagination 
+          totalPages={requests?.totalPages} 
+          currentPage={currentPage} 
+          onPageChange={setCurrentPage} 
+        />
       </div>
       {isOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-600 bg-opacity-50 flex items-center justify-center">

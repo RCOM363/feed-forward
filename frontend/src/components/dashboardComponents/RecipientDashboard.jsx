@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchRecipientFoodRequests } from '../../api/foodRequest';
@@ -7,15 +7,18 @@ import FoodRequest from './FoodRequest';
 import FoodPost from './FoodPost';
 
 const RecipientDashboard = () => {
-  const { data: foodRequests } = useQuery({
-    queryKey: ["recipientFoodRequests"],
-    queryFn: fetchRecipientFoodRequests,
+  const [currentFoodRequestsPage, setCurrentFoodRequestsPage] = useState(1);
+  const [currentFoodPostsPage, setCurrentFoodPostsPage] = useState(1);
+
+  const { data: requests, isLoading:areRequestsLoading } = useQuery({
+    queryKey: ["recipientFoodRequests",currentFoodRequestsPage],
+    queryFn: () => fetchRecipientFoodRequests(currentFoodRequestsPage,2),
     enabled: true
   })
 
-  const { data: foodPosts } = useQuery({   
-    queryKey: ["foodPosts"],
-    queryFn: fetchFoodPosts,
+  const { data: posts, isLoading:arePostsLoading } = useQuery({   
+    queryKey: ["foodPosts",currentFoodPostsPage],
+    queryFn:() => fetchFoodPosts(currentFoodPostsPage,2),
     enabled: true
   })
 
@@ -27,13 +30,13 @@ const RecipientDashboard = () => {
           <div className="bg-white rounded-lg shadow-xl p-6">
             <h2 className="text-2xl font-bold text-gray-700 mb-6">Your Food Requests</h2>
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <FoodRequest foodRequests={foodRequests} userRole="Recipient" />
+              <FoodRequest requests={requests} isLoading={areRequestsLoading} currentPage={currentFoodRequestsPage} setCurrentPage={setCurrentFoodRequestsPage} userRole="Recipient" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow-xl p-6">
             <h2 className="text-2xl font-bold text-gray-700 mb-6">Available Food Posts</h2>
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <FoodPost foodPosts={foodPosts} userRole="Recipient" />
+              <FoodPost posts={posts} isLoading={arePostsLoading} currentPage={currentFoodPostsPage} setCurrentPage={setCurrentFoodPostsPage} userRole="Recipient" />
             </div>
           </div>
         </div>

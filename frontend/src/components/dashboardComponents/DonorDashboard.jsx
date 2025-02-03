@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchDonorFoodPosts } from '../../api/foodPosts';
@@ -7,15 +7,18 @@ import FoodPost from './FoodPost';
 import FoodRequest from './FoodRequest';
 
 const DonorDashboard = () => {
-  const { data: foodPosts } = useQuery({
-    queryKey: ["donorFoodPosts"],
-    queryFn: fetchDonorFoodPosts,
+  const [currentFoodPostsPage, setCurrentFoodPostsPage] = useState(1);
+  const [currentFoodRequestsPage, setCurrentFoodRequestsPage] = useState(1);
+
+  const { data: posts, isLoading:arePostsLoading } = useQuery({
+    queryKey: ["donorFoodPosts", currentFoodPostsPage],
+    queryFn:() => fetchDonorFoodPosts(currentFoodPostsPage,2),
     enabled: true
   });
 
-  const { data: foodRequests } = useQuery({
-    queryKey: ["foodRequests"],
-    queryFn: fetchFoodRequests,
+  const { data: requests, isLoading:areRequestsLoading } = useQuery({
+    queryKey: ["foodRequests", currentFoodRequestsPage],
+    queryFn: () => fetchFoodRequests(currentFoodRequestsPage,2),
     enabled: true
   });
 
@@ -27,13 +30,25 @@ const DonorDashboard = () => {
           <div className="bg-white rounded-lg shadow-xl p-6 ">
             <h2 className="text-2xl font-bold text-gray-700 mb-6">Your Food Posts</h2>
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <FoodPost foodPosts={foodPosts} userRole="Donor" />
+              <FoodPost 
+                posts={posts} 
+                isLoading={arePostsLoading} 
+                currentPage={currentFoodPostsPage} 
+                setCurrentPage={setCurrentFoodPostsPage} 
+                userRole="Donor" 
+              />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow-xl p-6">
             <h2 className="text-2xl font-bold text-gray-700 mb-6">Food Requests</h2>
             <div className="overflow-hidden rounded-lg border border-gray-200">
-              <FoodRequest foodRequests={foodRequests} userRole="Donor" />
+              <FoodRequest 
+                requests={requests} 
+                isLoading={areRequestsLoading}
+                currentPage={currentFoodRequestsPage}
+                setCurrentPage={setCurrentFoodRequestsPage}
+                userRole="Donor" 
+              />
             </div>
           </div>
         </div>
