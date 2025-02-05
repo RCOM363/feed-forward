@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 import { fetchCityAdmins, removeCityAdmin } from '../../api/admin';
@@ -8,6 +8,8 @@ import { parseErrorMessage } from '../../utils/parseErrorMessage';
 
 const AdminDashboard = () => {
   const [addCityAdmin, setAddCityAdmin] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const { data: cityAdmins } = useQuery({
     queryKey: ["cityAdmins"],
@@ -19,6 +21,7 @@ const AdminDashboard = () => {
     mutationFn: removeCityAdmin,
     onSuccess: () => {
       toast.success("City Admin removed successfully");
+      queryClient.invalidateQueries(["cityAdmins"])
     },
     onError: (error) => {
       console.log(error);
