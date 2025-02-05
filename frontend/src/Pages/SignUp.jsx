@@ -12,6 +12,7 @@ import { useFetchCoordinates } from "../hooks/useFetchCoordinates";
 import { createFormData } from "../utils/createFormData";
 import { signupSchema } from "../utils/validations";
 import { registerUser } from "../api/users";
+import { parseErrorMessage } from "../utils/parseErrorMessage";
 
 export default function Signup() {
   const [userType, setUserType] = useState(null);
@@ -30,7 +31,7 @@ export default function Signup() {
     onError: (error) => {
       setIsLoading(false);
       console.log(error);
-      toast.error("Signup failed. Please try again.");
+      toast.error(parseErrorMessage(error?.response));
     },
   });
 
