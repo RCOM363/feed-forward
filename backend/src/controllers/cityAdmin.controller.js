@@ -65,12 +65,12 @@ const rejectRecipient = asyncHandler(async (req, res) => {
   <p>
   Your account with the username ${recipient.username} has been deleted as your account was rejected by your city admin, please contact the city admin for any queries <br/>
   <b>City Admin</b><br/>
-  <b>Email:</b> ${req.user.email}<br/>
+  <b>Email:</b> ${mail}<br/>
   <b>Phone:</b> ${req.user.phoneNo}
   </p>
   `;
 
-  await sendEmail([email], "Verification Rejected", message);
+  await sendEmail([mail], "Verification Rejected", message);
 
   console.log("Recipient rejected successfully");
 });

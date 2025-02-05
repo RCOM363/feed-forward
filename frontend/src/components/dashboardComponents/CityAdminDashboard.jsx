@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-import { fetchVerificationList, verifyRecipient } from '../../api/cityAdmin';
+import { fetchVerificationList, verifyRecipient, rejectRecipient } from '../../api/cityAdmin';
 import { parseErrorMessage } from '../../utils/parseErrorMessage';
 
 const CityAdminDashboard = () => {
@@ -26,6 +26,18 @@ const CityAdminDashboard = () => {
       toast.error(parseErrorMessage(error?.response));
     }
   });
+
+  const rejectRecipientMutation = useMutation({
+    mutationFn: rejectRecipient,
+    onSuccess:() => {
+      toast.success("Recipient rejected successfully");
+      queryClient.invalidateQueries(["verificationList"])
+    },
+    onError:(error) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error?.response));
+    }
+  })
 
   return (
     <div className="bg-gradient-to-r from-green-100 via-teal-100 to-blue-100 min-h-screen py-4 sm:py-6 md:py-9">
@@ -61,6 +73,7 @@ const CityAdminDashboard = () => {
                     </button>
                     <button 
                       className="flex-1 sm:flex-none px-3 sm:px-4 py-2 text-sm sm:text-base bg-red-500 text-white rounded-xl hover:bg-red-600 "
+                      onClick={() => rejectRecipientMutation.mutate(recipient._id)}
                     >
                       Reject
                     </button>

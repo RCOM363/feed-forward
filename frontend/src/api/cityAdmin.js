@@ -11,3 +11,8 @@ export const verifyRecipient = async (id) => {
   );
   return response.data.data;
 };
+
+export const rejectRecipient = async (id) => {
+  const response = await axiosInstance.delete(`cityAdmin/reject-recipient/${id}`)
+  return response.data.data;
+}
