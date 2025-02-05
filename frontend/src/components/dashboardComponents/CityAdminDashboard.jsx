@@ -1,13 +1,16 @@
 import React from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 import { fetchVerificationList, verifyRecipient } from '../../api/cityAdmin';
 import { parseErrorMessage } from '../../utils/parseErrorMessage';
 
 const CityAdminDashboard = () => {
+
+  const queryClient = useQueryClient()
+
   const { data: verificationList } = useQuery({
-    queryKey: ["VerificationList"],
+    queryKey: ["verificationList"],
     queryFn: fetchVerificationList,
     enabled: true
   });
@@ -16,6 +19,7 @@ const CityAdminDashboard = () => {
     mutationFn: verifyRecipient,
     onSuccess: () => {
       toast.success("Recipient verified successfully");
+      queryClient.invalidateQueries(["verificationList"])
     },
     onError: (error) => {    
       console.log(error);

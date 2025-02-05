@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import BeatLoader from "react-spinners/BeatLoader";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
@@ -12,13 +12,17 @@ import { cityAdminSchema } from "../../utils/validations";
 import { addCityAdmin } from "../../api/admin";
 
 function AddCityAdmin({ setAddCityAdmin }) {
+  
+  const queryClient = useQueryClient();
+  
   const { mutateAsync: fetchCoordinates } = useFetchCoordinates();
-
+  
   const addCityAdminMutation = useMutation({
     mutationFn: addCityAdmin,
     onSuccess: () => {
       toast.success("City admin added successfully");
       setAddCityAdmin(false);
+      queryClient.invalidateQueries(["cityAdmins"])
     },
     onError: (error) => {
       console.log(error);

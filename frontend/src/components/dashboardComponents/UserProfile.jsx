@@ -2,7 +2,7 @@ import React from "react";
 
 function UserProfile({ user }) {
   const avatarUrl =
-    user.avatarImage ||
+    user.avatar ||
     `https://eu.ui-avatars.com/api/?name=${user.username}&size=250`;
 
   return (
