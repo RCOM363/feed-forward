@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 import { fetchCityAdmins, removeCityAdmin } from '../../api/admin';
 import AddCityAdmin from './AddCityAdmin';
+import { parseErrorMessage } from '../../utils/parseErrorMessage';
 
 const AdminDashboard = () => {
   const [addCityAdmin, setAddCityAdmin] = useState(false);
@@ -21,7 +22,7 @@ const AdminDashboard = () => {
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Failed to remove City Admin");
+      toast.error(parseErrorMessage(error?.response));
     }
   });
 

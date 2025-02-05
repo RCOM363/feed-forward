@@ -1,7 +1,9 @@
 import React from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+
 import { fetchVerificationList, verifyRecipient } from '../../api/cityAdmin';
+import { parseErrorMessage } from '../../utils/parseErrorMessage';
 
 const CityAdminDashboard = () => {
   const { data: verificationList } = useQuery({
@@ -17,7 +19,7 @@ const CityAdminDashboard = () => {
     },
     onError: (error) => {    
       console.log(error);
-      toast.error("Failed to verify recipient");
+      toast.error(parseErrorMessage(error?.response));
     }
   });
 

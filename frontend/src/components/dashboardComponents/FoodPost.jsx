@@ -26,6 +26,7 @@ const FoodPost = ({ posts,isLoading,currentPage, setCurrentPage, userRole }) => 
     },
     onError: (error) => {
       console.log(error);
+      toast.error(parseErrorMessage(error?.response));
     },
   });
 

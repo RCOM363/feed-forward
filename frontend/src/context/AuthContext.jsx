@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { loginUser, fetchUserProfile, logoutUser } from "../api/users";
+import { parseErrorMessage } from "../utils/parseErrorMessage";
 
 const AuthContext = createContext(null);
 
@@ -45,6 +46,7 @@ export const AuthContextProvider = ({ children }) => {
     },
     onError: (error) => {
       console.log(error);
+      toast.error(parseErrorMessage(error?.response))
     },
   });
 
@@ -64,7 +66,7 @@ export const AuthContextProvider = ({ children }) => {
       navigate("/login");
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(parseErrorMessage(error?.response));
     },
   });
 
