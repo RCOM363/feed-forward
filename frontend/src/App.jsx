@@ -3,11 +3,11 @@ import { Toaster } from "react-hot-toast";
 
 import { AuthContextProvider } from "./context/AuthContext";
 import Home from "./Pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/SignUp";
+import Login from "./Pages/Login";
+import Signup from "./Pages/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import DonationComplete from "./pages/DonationComplete";
+import Dashboard from "./Pages/Dashboard";
+import DonationComplete from "./Pages/DonationComplete";
 
 function App() {
   return (
