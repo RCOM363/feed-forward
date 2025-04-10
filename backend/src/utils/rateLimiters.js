@@ -26,3 +26,10 @@ export const postLimiter = rateLimit({
   max: 20,
   message: "Too many food post actions. Please wait a while.",
 });
+
+// food request
+export const requestLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 25,
+  message: "Too many food request operations. Try again later.",
+});
