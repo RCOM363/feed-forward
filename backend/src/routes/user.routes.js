@@ -13,7 +13,7 @@ import { upload } from "../middlewares/multer.middleware.js";
 import {
   loginLimiter,
   signUpLimiter,
-  profileLimiter,
+  generalGetLimiter,
 } from "../utils/rateLimiters.js";
 
 const router = Router();
@@ -27,15 +27,15 @@ router
 router.route("/login").post(loginLimiter, upload.none(), userLogin);
 
 // secured routes
-router.route("/logout").post(profileLimiter, verifyJWT, userLogout);
+router.route("/logout").post(generalGetLimiter, verifyJWT, userLogout);
 router
   .route("/create-city-admin")
   .post(signUpLimiter, upload.none(), verifyJWT, isAdmin, createCityAdmin);
 router
   .route("/get-user-profile")
-  .get(profileLimiter, verifyJWT, getUserProfile);
+  .get(generalGetLimiter, verifyJWT, getUserProfile);
 router
   .route("/get-dashboard-stats")
-  .get(profileLimiter, verifyJWT, getDashboardStats);
+  .get(generalGetLimiter, verifyJWT, getDashboardStats);
 
 export default router;
