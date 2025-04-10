@@ -7,21 +7,26 @@ import {
   getFoodRequest,
 } from "../controllers/cityAdmin.controller.js";
 import { verifyJWT, isCityAdmin } from "../middlewares/auth.middleware.js";
+import { cityAdminLimiter } from "../utils/rateLimiters.js";
 
 const router = Router();
 
 // secured routes
 router
   .route("/get-verification-list")
-  .get(verifyJWT, isCityAdmin, getVerificationList);
+  .get(cityAdminLimiter, verifyJWT, isCityAdmin, getVerificationList);
 router
   .route("/verify-recipient/:id")
-  .patch(verifyJWT, isCityAdmin, verifyRecipient);
+  .patch(cityAdminLimiter, verifyJWT, isCityAdmin, verifyRecipient);
 router
   .route("/reject-recipient/:id")
-  .delete(verifyJWT, isCityAdmin, rejectRecipient);
+  .delete(cityAdminLimiter, verifyJWT, isCityAdmin, rejectRecipient);
 
-router.route("/get-food-posts").get(verifyJWT, isCityAdmin, getFoodPosts);
-router.route("/get-food-requests").get(verifyJWT, isCityAdmin, getFoodRequest);
+router
+  .route("/get-food-posts")
+  .get(cityAdminLimiter, verifyJWT, isCityAdmin, getFoodPosts);
+router
+  .route("/get-food-requests")
+  .get(cityAdminLimiter, verifyJWT, isCityAdmin, getFoodRequest);
 
 export default router;

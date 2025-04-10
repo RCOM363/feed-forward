@@ -33,3 +33,17 @@ export const requestLimiter = rateLimit({
   max: 25,
   message: "Too many food request operations. Try again later.",
 });
+
+// admin
+export const adminLimiter = rateLimit({
+  windowMs: 30 * 60 * 1000,
+  max: 50,
+  message: "Too many admin operations. Please try again later.",
+});
+
+// city admin
+export const cityAdminLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 50,
+  message: "Too many city admin requests. Please slow down.",
+});
