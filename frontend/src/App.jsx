@@ -32,9 +32,9 @@ function App() {
           <Route
             path="/donation-complete/:donationId"
             element={
-              <ProtectedRoute allowedRoles={["Recipient"]}>
+              // <ProtectedRoute allowedRoles={["Recipient"]}>
                 <DonationComplete />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           {/* 404 */}
