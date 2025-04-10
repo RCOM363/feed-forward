@@ -13,26 +13,39 @@ import {
   isRecipient,
 } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { generalGetLimiter, postLimiter } from "../utils/rateLimiters.js";
 
 const router = Router();
 
 // secured routes
 router
   .route("/add-post")
-  .post(upload.array("images"), verifyJWT, isDonor, addFoodPost);
+  .post(postLimiter, upload.array("images"), verifyJWT, isDonor, addFoodPost);
 
 router
   .route("/update-post/:postId")
-  .patch(upload.array("images"), verifyJWT, isDonor, updateFoodPost);
+  .patch(
+    postLimiter,
+    upload.array("images"),
+    verifyJWT,
+    isDonor,
+    updateFoodPost
+  );
 
-router.route("/delete-post/:postId").delete(verifyJWT, isDonor, deleteFoodPost);
+router
+  .route("/delete-post/:postId")
+  .delete(postLimiter, verifyJWT, isDonor, deleteFoodPost);
 
-router.route("/get-donor-posts").get(verifyJWT, isDonor, getDonorFoodPosts);
+router
+  .route("/get-donor-posts")
+  .get(generalGetLimiter, verifyJWT, isDonor, getDonorFoodPosts);
 
 router
   .route("/get-available-posts")
-  .get(verifyJWT, isRecipient, getAvailableFoodPosts);
+  .get(generalGetLimiter, verifyJWT, isRecipient, getAvailableFoodPosts);
 
-router.route("/request-food/:postId").post(verifyJWT, isRecipient, requestFood);
+router
+  .route("/request-food/:postId")
+  .post(postLimiter, verifyJWT, isRecipient, requestFood);
 
 export default router;
