@@ -12,7 +12,7 @@ services:
       dockerfile: Dockerfile
       target: dev
     volumes:
-      - ./backend:/app
+      - ./backend:/app # for hot reloding
     ports:
       - "5000:5000"
     environment:
@@ -34,9 +34,10 @@ services:
       dockerfile: Dockerfile
       target: dev
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app # for hot reloading
+      - /app/node_modules # to prevent host node_modules from mounting
     ports:
-      - "5173:5713"
+      - "5173:5173"
     environment:
       - VITE_API_URL=http://localhost:5000/api/v1/
     depends_on:
@@ -45,7 +46,7 @@ services:
   backend-prod:
     build:
       context: ./backend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
       target: prod
     ports:
       - "8080:5000"
@@ -65,12 +66,12 @@ services:
   frontend-prod:
     build:
       context: ./frontend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
       target: prod
     ports:
       - "5173:80"
     environment:
-      - VITE_API_URL="http://localhost:5000/api/v1/"
+      - VITE_API_URL=http://localhost:5000/api/v1/
     depends_on:
       - backend-prod
 
