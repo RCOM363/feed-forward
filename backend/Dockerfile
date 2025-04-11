@@ -1,17 +1,17 @@
 # development stage
-FROM node:22-alphine as dev
+FROM node:20-slim AS dev
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm intsall
+RUN npm install
 
 COPY . .
 
 CMD ["npx","nodemon","index.js"]
 
 # production stage
-FROM node:22-alphine as prod
+FROM node:20-slim AS prod
 
 WORKDIR /app
 

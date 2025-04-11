@@ -1,5 +1,5 @@
 # developement stage
-FROM node:22-alphine as dev
+FROM node:20-slim AS dev
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . .
 CMD ["npm","run","dev"]
 
 # build stage
-FROM node:22-alphine as build
+FROM node:20-slim AS build
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY . .
 RUN npm run build
 
 # production stage
-FROM nginx:alphine as prod
+FROM nginx:alpine AS prod
 
 COPY --from=build /app/build /usr/share/nginx/html
 
