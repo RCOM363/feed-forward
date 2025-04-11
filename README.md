@@ -25,6 +25,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 - [Features](https://github.com/RCOM363/feed-forward#features)
 - [Platform workflow](https://github.com/RCOM363/feed-forward#platform-workflow)
 - [Contributors](https://github.com/RCOM363/feed-forward#contributors)
+- [Getting started](https://github.com/RCOM363/feed-forward#getting-started)
 - [Preview](https://github.com/RCOM363/feed-forward#preview)
 - [API documentation](https://github.com/RCOM363/feed-forward#api-documentation)
 
@@ -75,6 +76,42 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 </a>
 
 [<a href="#top">back to top</a>]
+
+## Getting started
+
+In order to run this container you'll need,
+
+- Docker installed
+- Setup .env in both frontend and backend
+
+```env
+# frontend
+VITE_API_URL=http://localhost:5000/api/v1/
+
+# backend
+PORT=5000
+MONGODB_URL=<your_mongodb_cluster_url or local_url>
+CORS_ORIGIN=http://localhost:5173
+ADMIN_EMAIL=<admin_email>
+TOKEN_SECRET=<your_token_secret>
+EMAIL_USER=<email>
+EMAIL_APP_PASS=<email_app_pass>
+CLOUDINARY_CLOUD_NAME=<cloudinary_cloud_name>
+CLOUDINARY_API_KEY=<api_key>
+CLOUDINARY_API_SECRET=<api_key_secret>
+```
+
+### Development stage
+
+```bash
+docker-compose up frontend-dev
+```
+
+### Production stage
+
+```bash
+docker-compose up frontend-prod
+```
 
 ## Preview
 
