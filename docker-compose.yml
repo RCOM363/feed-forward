@@ -4,7 +4,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - feedforward_db:/data/db
+      - ff_db:/data/db
 
   backend-dev:
     build:
@@ -17,7 +17,7 @@ services:
       - "5000:5000"
     environment:
       - MONGODB_URL=mongodb://db:27017/feedforward-dev
-      - CORS_ORIGIN=value
+      - CORS_ORIGIN=http://localhost:5173/
       - ADMIN_EMAIL=value
       - TOKEN_SECRET=value
       - EMAIL_USER=value
@@ -38,7 +38,7 @@ services:
     ports:
       - "5173:5713"
     environment:
-      - VITE_API_URL="http://localhost:5000/api/v1/"
+      - VITE_API_URL=http://localhost:5000/api/v1/
     depends_on:
       - backend-dev
 
@@ -75,4 +75,4 @@ services:
       - backend-prod
 
 volumes:
-  feedforward_db:
+  ff_db:
