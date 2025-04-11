@@ -8,16 +8,8 @@ services:
       - ./backend:/app # for hot reloding
     ports:
       - "5000:5000"
-    environment:
-      - MONGODB_URL=value
-      - CORS_ORIGIN=http://localhost:5173/
-      - ADMIN_EMAIL=value
-      - TOKEN_SECRET=value
-      - EMAIL_USER=value
-      - EMAIL_APP_PASS=value
-      - CLOUDINARY_CLOUD_NAME=value
-      - CLOUDINARY_API_KEY=value
-      - CLOUDINARY_API_SECRET=value
+    env_file:
+      - ./backend/.env
 
   frontend-dev:
     build:
@@ -29,8 +21,8 @@ services:
       - /app/node_modules # to prevent host node_modules from mounting
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_URL=http://localhost:5000/api/v1/
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend-dev
 
@@ -41,16 +33,8 @@ services:
       target: prod
     ports:
       - "8080:5000"
-    environment:
-      - MONGODB_URL=value
-      - CORS_ORIGIN=value
-      - ADMIN_EMAIL=value
-      - TOKEN_SECRET=value
-      - EMAIL_USER=value
-      - EMAIL_APP_PASS=value
-      - CLOUDINARY_CLOUD_NAME=value
-      - CLOUDINARY_API_KEY=value
-      - CLOUDINARY_API_SECRET=value
+    env_file:
+      - ./backend/.env
 
   frontend-prod:
     build:
@@ -59,7 +43,7 @@ services:
       target: prod
     ports:
       - "5173:80"
-    environment:
-      - VITE_API_URL=http://localhost:5000/api/v1/
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend-prod
