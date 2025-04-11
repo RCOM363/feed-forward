@@ -8,7 +8,8 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm","run","dev"]
+CMD ["npm","run","dev","--","--host","0.0.0.0"] 
+# ["--", "--host","0.0.0.0"] to bind to all IPs (allows access from outside the container)
 
 # build stage
 FROM node:20-slim AS build
