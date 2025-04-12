@@ -20,7 +20,7 @@ const DonorDashboard = () => {
     queryKey: ["foodRequests", currentFoodRequestsPage],
     queryFn: () => fetchFoodRequests(currentFoodRequestsPage, 2),
     enabled: true,
-    refetchInterval: 10 * 60 * 1000, // refetch every 10 minutes
+    refetchInterval: 5 * 60 * 1000, // refetch every 10 minutes
   });
 
   return (
