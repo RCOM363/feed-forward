@@ -82,6 +82,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 In order to run this container you'll need,
 
 - Docker installed
+- Add ```public/temp``` folders in backend
 - Setup .env in both frontend and backend
 
 ```env
