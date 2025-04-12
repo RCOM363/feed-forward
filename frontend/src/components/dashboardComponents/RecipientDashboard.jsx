@@ -14,13 +14,13 @@ const RecipientDashboard = () => {
     queryKey: ["recipientFoodRequests", currentFoodRequestsPage],
     queryFn: () => fetchRecipientFoodRequests(currentFoodRequestsPage, 2),
     enabled: true,
-    refetchInterval: 10 * 60 * 1000, // refetch every 10 minutes
   });
 
   const { data: posts, isLoading: arePostsLoading } = useQuery({
     queryKey: ["foodPosts", currentFoodPostsPage],
     queryFn: () => fetchFoodPosts(currentFoodPostsPage, 2),
     enabled: true,
+    refetchInterval: 5 * 60 * 1000, // refetch every 10 minutes
   });
 
   return (
