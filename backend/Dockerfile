@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-CMD ["npx","nodemon","index.js"]
+CMD ["npx","nodemon","src/index.js"]
 
 # production stage
 FROM node:20-slim AS prod
