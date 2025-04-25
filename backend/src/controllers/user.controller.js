@@ -16,7 +16,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { validateRequiredFields } from "../utils/validateRequiredFields.js";
 import { createLocationObject } from "../utils/createLocationObject.js";
-import { sendEmail } from "../utils/mailer.js";
+import { emailQueue } from "../utils/emailQueue.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // helper functions
@@ -222,11 +222,17 @@ const recipientSignUp = asyncHandler(async (req, res) => {
     </p>
   `;
 
-  await sendEmail(
-    emailList,
-    "New Recipient Registration - Verification Required",
-    message
-  );
+  // await sendEmail(
+  //   emailList,
+  //   "New Recipient Registration - Verification Required",
+  //   message
+  // );
+
+  await emailQueue.add("email-queue", {
+    receivers: emailList,
+    subject: "New Recipient Registration - Verification Required",
+    message,
+  });
 
   return res
     .status(200)
@@ -339,11 +345,17 @@ const createCityAdmin = asyncHandler(async (req, res) => {
     </p>
   `;
 
-  await sendEmail(
-    [createdUser.email],
-    "City Admin Role and Login Details",
-    message
-  );
+  // await sendEmail(
+  //   [createdUser.email],
+  //   "City Admin Role and Login Details",
+  //   message
+  // );
+
+  await emailQueue.add("email-queue", {
+    receivers: [createdUser.email],
+    subject: "City Admin Role and Login Details",
+    message,
+  });
 
   return res
     .status(200)

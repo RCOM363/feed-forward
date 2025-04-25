@@ -5,7 +5,7 @@ import { FoodPost } from "../models/foodPost.model.js";
 import { FoodRequest } from "../models/foodRequest.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { sendEmail } from "../utils/mailer.js";
+import { emailQueue } from "../utils/emailQueue.js";
 
 const getVerificationList = asyncHandler(async (req, res) => {
   const recipients = await Recipient.find({
@@ -41,7 +41,12 @@ const verifyRecipient = asyncHandler(async (req, res) => {
   </p>
 `;
 
-  await sendEmail([recipient.email], "Verification Successfull", message);
+  // await sendEmail([recipient.email], "Verification Successfull", message);
+  await emailQueue.add("email-queue", {
+    receivers: [recipient.email],
+    subject: "Verification Successfull",
+    message,
+  });
 
   return res
     .status(200)
@@ -70,7 +75,12 @@ const rejectRecipient = asyncHandler(async (req, res) => {
   </p>
   `;
 
-  await sendEmail([mail], "Verification Rejected", message);
+  // await sendEmail([mail], "Verification Rejected", message);
+  await emailQueue.add("email-queue", {
+    receivers: [mail],
+    subject: "Verification Rejected",
+    message,
+  });
 
   console.log("Recipient rejected successfully");
 });
