@@ -6,7 +6,7 @@ import { Donation } from "../models/donation.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { generateQRCode } from "../utils/generateQRCode.js";
-import { sendEmail } from "../utils/mailer.js";
+import { emailQueue } from "../utils/emailQueue.js";
 
 const addFoodRequest = asyncHandler(async (req, res) => {
   const { title, description, quantity, quantityUnit, foodType, requiredBy } =
@@ -58,7 +58,11 @@ const addFoodRequest = asyncHandler(async (req, res) => {
     </p>
   `;
 
-  await sendEmail(donorsEmails, "New Food Post Available", message);
+  await emailQueue.add("email-queue", {
+    receivers: donorsEmails,
+    subject: "New Food Request",
+    message,
+  });
 
   return res
     .status(200)
@@ -129,21 +133,28 @@ const deleteFoodRequest = asyncHandler(async (req, res) => {
 
 const updateUserFoodRequests = asyncHandler(async (id) => {
   const currentDate = new Date();
-  const updateStatus = await FoodRequest.updateMany({
-    requestedBy: id,
-    requiredBy:{ $lt: currentDate },
-    status:{$nin:["fulfilled","expired"]}
-  }, { $set: { status: "expired" }
-  })
-   if (!updateStatus) {
-    throw new ApiError(500, "Something went wrong while updating food request status of an user");
-   }
+  const updateStatus = await FoodRequest.updateMany(
+    {
+      requestedBy: id,
+      requiredBy: { $lt: currentDate },
+      status: { $nin: ["fulfilled", "expired"] },
+    },
+    { $set: { status: "expired" } }
+  );
+  if (!updateStatus) {
+    throw new ApiError(
+      500,
+      "Something went wrong while updating food request status of an user"
+    );
+  }
 
-   console.log(`${updateStatus.modifiedCount} food requests were marked expired`);
-})
+  console.log(
+    `${updateStatus.modifiedCount} food requests were marked expired`
+  );
+});
 
 const getRecipientFoodRequests = asyncHandler(async (req, res) => {
-  const {page, limit} = req.query;
+  const { page, limit } = req.query;
   // update status of expired food requests
   await updateUserFoodRequests(req.user._id);
 
@@ -156,40 +167,49 @@ const getRecipientFoodRequests = asyncHandler(async (req, res) => {
     .limit(limitNumber)
     .sort({ createdAt: -1 });
 
-  const totalFoodRequests = await FoodRequest.countDocuments({ requestedBy: req.user._id });
+  const totalFoodRequests = await FoodRequest.countDocuments({
+    requestedBy: req.user._id,
+  });
 
   console.log("Food requests fetched successfully");
 
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, 
-        {
-          foodRequests,
-          currentPage: pageNumber,
-          totalPages: Math.ceil(totalFoodRequests / limitNumber),
-        }
-        , "Food requests fetched successfully")
-    );
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        foodRequests,
+        currentPage: pageNumber,
+        totalPages: Math.ceil(totalFoodRequests / limitNumber),
+      },
+      "Food requests fetched successfully"
+    )
+  );
 });
 
 const updateCityFoodRequests = asyncHandler(async (city) => {
   const currentDate = new Date();
-  const updateStatus = await FoodRequest.updateMany({
-    "location.properties.city": city,
-    requiredBy:{ $lt: currentDate },
-    status:{$nin:["fulfilled","expired"]}
-  }, { $set: { status: "expired" }
-  })
-   if (!updateStatus) {
-    throw new ApiError(500, "Something went wrong while updating food request status of a city");
-   }
+  const updateStatus = await FoodRequest.updateMany(
+    {
+      "location.properties.city": city,
+      requiredBy: { $lt: currentDate },
+      status: { $nin: ["fulfilled", "expired"] },
+    },
+    { $set: { status: "expired" } }
+  );
+  if (!updateStatus) {
+    throw new ApiError(
+      500,
+      "Something went wrong while updating food request status of a city"
+    );
+  }
 
-   console.log(`${updateStatus.modifiedCount} food requests were marked expired`);
-})
+  console.log(
+    `${updateStatus.modifiedCount} food requests were marked expired`
+  );
+});
 
 const getFoodRequests = asyncHandler(async (req, res) => {
-  const {page, limit} = req.query;
+  const { page, limit } = req.query;
   // update status of expired food requests
   await updateCityFoodRequests(req.user.location.properties.city);
 
@@ -212,17 +232,17 @@ const getFoodRequests = asyncHandler(async (req, res) => {
 
   console.log("Food requests fetched successfully");
 
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, 
-        {
-          foodRequests,
-          currentPage: pageNumber,
-          totalPages: Math.ceil(totalUnfulfilledFoodRequests / limitNumber),
-        }, 
-        "Food requests fetched successfully")
-    );
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        foodRequests,
+        currentPage: pageNumber,
+        totalPages: Math.ceil(totalUnfulfilledFoodRequests / limitNumber),
+      },
+      "Food requests fetched successfully"
+    )
+  );
 });
 
 const fulfillFoodRequest = asyncHandler(async (req, res) => {
@@ -287,7 +307,12 @@ const fulfillFoodRequest = asyncHandler(async (req, res) => {
     </p>
   `;
 
-  await sendEmail([req.user.email], "Donation Request", donorMessage);
+  // await sendEmail([req.user.email], "Donation Request", donorMessage);
+  await emailQueue.add("email-queue", {
+    receivers: [req.user.email],
+    subject: "Donation Request",
+    message: donorMessage,
+  });
 
   const lon = req.user.location.coordinates[0];
   const lat = req.user.location.coordinates[1];
@@ -303,7 +328,12 @@ const fulfillFoodRequest = asyncHandler(async (req, res) => {
     </p>
   `;
 
-  await sendEmail([recipient.email], "Donation in progress", recipientMessage);
+  // await sendEmail([recipient.email], "Donation in progress", recipientMessage);
+  await emailQueue.add("email-queue", {
+    receivers: [recipient.email],
+    subject: "Donation in progress",
+    message: recipientMessage,
+  });
 
   return res
     .status(200)
