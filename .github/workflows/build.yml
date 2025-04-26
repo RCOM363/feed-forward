@@ -33,6 +33,7 @@ jobs:
         working-directory: ./backend
         run: |
           echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
+          echo "REDIS_HOST=localhost" >> .env
           nohup npm run dev:all & sleep 5
 
       - name: Install Frontend Dependencies
