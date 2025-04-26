@@ -8,3 +8,8 @@ const redisConfig = {
 export const redisConnection = new Redis(redisConfig, {
   maxRetriesPerRequest: null,
 });
+
+// health check
+redisConnection.on("connect", () => {
+  console.log("Redis connected successfully");
+});
