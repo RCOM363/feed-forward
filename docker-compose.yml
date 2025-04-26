@@ -1,4 +1,12 @@
 services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  # development
   backend-dev:
     build:
       context: ./backend
@@ -10,6 +18,21 @@ services:
       - "5000:5000"
     env_file:
       - ./backend/.env
+    depends_on:
+      - email-worker-dev
+
+  email-worker-dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    command: ["node", "src/workers/emailWorker.js"]
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
 
   frontend-dev:
     build:
@@ -26,15 +49,30 @@ services:
     depends_on:
       - backend-dev
 
+  # production
   backend-prod:
     build:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
+    command: ["pm2-runtime", "ecosystem.config.js", "--only", "backend-server"]
     ports:
       - "8080:5000"
     env_file:
       - ./backend/.env
+    depends_on:
+      - email-worker-prod
+
+  email-worker-prod:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    command: ["pm2-runtime", "ecosystem.config.js", "--only", "email-worker"]
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
 
   frontend-prod:
     build:
@@ -47,3 +85,6 @@ services:
       - ./frontend/.env
     depends_on:
       - backend-prod
+
+volumes:
+  redis-data: {}
