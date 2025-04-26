@@ -31,10 +31,12 @@ jobs:
 
       - name: Start backend server and email worker
         working-directory: ./backend
+        env:
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
         run: |
-          echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
-          echo "REDIS_HOST=localhost" >> .env
-          nohup npm run dev:all & sleep 5
+          nohup npm run start:all & sleep 5
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
