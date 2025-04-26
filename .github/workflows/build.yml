@@ -33,7 +33,7 @@ jobs:
         working-directory: ./backend
         run: |
           echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" > .env
-          nohup npm run start:all & sleep 5
+          nohup npm run dev:all & sleep 5
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
