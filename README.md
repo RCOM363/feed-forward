@@ -16,6 +16,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![Node.JS](https://img.shields.io/badge/Node.js-5FA04E.svg?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000.svg?style=for-the-badge&logo=Express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248.svg?style=for-the-badge&logo=MongoDB&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-FF4438.svg?style=for-the-badge&logo=Redis&logoColor=white)
 ![Mongoose](https://img.shields.io/badge/Mongoose-880000.svg?style=for-the-badge&logo=Mongoose&logoColor=white)
 ![JWT](https://img.shields.io/badge/JSON%20Web%20Tokens-000000.svg?style=for-the-badge&logo=JSON-Web-Tokens&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5.svg?style=for-the-badge&logo=Cloudinary&logoColor=white)
@@ -47,6 +48,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 - Donors receive alerts about recipient requests.
 - Recipients are notified about available food.
 - Both parties receive confirmation emails regarding donation transactions.
+- Uses **BullMQ** to queue email notifications.
 
 ### 4. **Authentication & Security**:
 
@@ -82,7 +84,7 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 In order to run this container you'll need,
 
 - Docker installed
-- Add ```public/temp``` folders in backend
+- Add `public/temp` folders in backend
 - Setup .env in both frontend and backend
 
 ```env
