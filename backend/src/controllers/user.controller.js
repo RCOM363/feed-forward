@@ -2,13 +2,7 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import {
-  User,
-  Admin,
-  CityAdmin,
-  Donor,
-  Recipient,
-} from "../models/user.model.js";
+import { User, CityAdmin, Donor, Recipient } from "../models/user.model.js";
 import { FoodPost } from "../models/foodPost.model.js";
 import { FoodRequest } from "../models/foodRequest.model.js";
 import { Donation } from "../models/donation.model.js";
@@ -267,6 +261,7 @@ const userLogin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    domain: "feed-forward.rcom363.in",
   };
 
   console.log("User logged in successfully");

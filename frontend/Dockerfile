@@ -22,13 +22,3 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
-# production stage
-FROM nginx:alpine AS prod
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# copy ngnix config
-COPY ngnix.conf /etc/ngnix/conf.d/default.conf
-
-CMD ["nginx","-g","daemon off;"]

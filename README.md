@@ -111,10 +111,10 @@ docker-compose up frontend-dev
 ```
 
 ### Production stage
-
 ```bash
-docker-compose up frontend-prod
+docker-compose up backend-prod
 ```
+- Deploy frontend using **AWS S3** & **CloudFront**
 
 ## Preview
 
