@@ -41,7 +41,7 @@ services:
       target: dev
     volumes:
       - ./frontend:/app # for hot reloading
-      - /app/node_modules # to prevent host node_modules from mounting
+      - frontend-node-modules:/app/node_modules # to prevent host node_modules from mounting
     ports:
       - "5173:5173"
     env_file:
