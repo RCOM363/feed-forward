@@ -57,7 +57,7 @@ services:
       target: prod
     command: ["pm2-runtime", "ecosystem.config.js", "--only", "backend-server"]
     ports:
-      - "8080:5000"
+      - "5000:5000"
     env_file:
       - ./backend/.env
     depends_on:
