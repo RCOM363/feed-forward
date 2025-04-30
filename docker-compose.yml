@@ -55,7 +55,15 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    command: ["pm2-runtime", "ecosystem.config.js", "--only", "backend-server"]
+    command:
+      [
+        "pm2-runtime",
+        "--node-args",
+        "--loader=module",
+        "ecosystem.config.js",
+        "--only",
+        "backend-server",
+      ]
     ports:
       - "5000:5000"
     env_file:
@@ -69,7 +77,15 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    command: ["pm2-runtime", "ecosystem.config.js", "--only", "email-worker"]
+    command:
+      [
+        "pm2-runtime",
+        "--node-args",
+        "--loader=module",
+        "ecosystem.config.js",
+        "--only",
+        "email-worker",
+      ]
     env_file:
       - ./backend/.env
     depends_on:
