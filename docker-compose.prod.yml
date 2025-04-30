@@ -1,0 +1,26 @@
+services:
+  backend-prod:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    command: ["node", "src/index.js"]
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - email-worker-prod
+    restart: always
+
+  email-worker-prod:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    command: ["node", "src/workers/emailWorker.js"]
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+    restart: always

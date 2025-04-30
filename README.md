@@ -107,13 +107,15 @@ CLOUDINARY_API_SECRET=<api_key_secret>
 ### Development stage
 
 ```bash
-docker-compose up frontend-dev
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
 ### Production stage
+
 ```bash
-docker-compose up backend-prod
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
+
 - Deploy frontend using **AWS S3** & **CloudFront**
 
 ## Preview

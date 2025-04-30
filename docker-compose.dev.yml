@@ -1,0 +1,45 @@
+services:
+  backend-dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./backend:/app # for hot reloding
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - email-worker-dev
+
+  email-worker-dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    command: ["node", "src/workers/emailWorker.js"]
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./frontend:/app # for hot reloading
+      - frontend-node-modules:/app/node_modules # to prevent host node_modules from mounting
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend-dev
+
+volumes:
+  frontend-node-modules:
