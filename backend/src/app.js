@@ -16,6 +16,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // routes import
+import healthCheckRouter from "./routes/healthcheck.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import cityAdminRouter from "./routes/cityAdmin.routes.js";
 import userRouter from "./routes/user.routes.js";
@@ -24,6 +25,7 @@ import foodRequestRouter from "./routes/foodRequest.routes.js";
 import donationRouter from "./routes/donation.routes.js";
 
 // routes declarations
+app.use("/api/v1/health", healthCheckRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/cityAdmin", cityAdminRouter);
 app.use("/api/v1/users", userRouter);
