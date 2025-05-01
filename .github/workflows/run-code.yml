@@ -34,6 +34,12 @@ jobs:
       - name: Check running containers
         run: docker ps
 
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: changed-files
+          path: .
+
       - name: Get list of changed files
         id: changed
         run: |
