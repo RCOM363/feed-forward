@@ -261,7 +261,6 @@ const userLogin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
-    domain: "feed-forward.rcom363.in",
   };
 
   console.log("User logged in successfully");
