@@ -1,11 +1,6 @@
 name: Deploy to AWS EC2
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "backend/**"
   workflow_run:
     workflows: [Run CI]
     types:
@@ -24,7 +19,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check if backend directory changed
+        id: changes
+        run: |
+          echo "CHANGED=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.workflow_run.head_sha }} | grep '^backend/' || true)" >> $GITHUB_ENV
+
+      - name: Exit if no backend changes
+        if: env.CHANGED == ''
+        run: |
+          echo "No changes in /backend. Skipping deployment."
+          exit 0
+
       - name: Deploy on EC2
+        if: env.CHANGED != ''
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
