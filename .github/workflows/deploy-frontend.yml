@@ -1,15 +1,15 @@
 name: Deploy to AWS S3 & CloudFront
 
 on:
-  workflow_run:
-    workflows: [Run CI]
-    types:
-      - completed
   push:
     branches:
       - main
     paths:
       - "frontend/**"
+  workflow_run:
+    workflows: [Run CI]
+    types:
+      - completed
 
 jobs:
   deploy-frontend:

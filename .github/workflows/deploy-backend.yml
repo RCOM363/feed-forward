@@ -1,15 +1,15 @@
 name: Deploy to AWS EC2
 
 on:
-  workflow_run:
-    workflows: [Run CI]
-    types:
-      - completed
   push:
     branches:
       - main
     paths:
       - "backend/**"
+  workflow_run:
+    workflows: [Run CI]
+    types:
+      - completed
 
 jobs:
   deploy-backend:
