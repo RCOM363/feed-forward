@@ -96,12 +96,12 @@ In order to run this container you'll need,
 
 ```env
 # frontend
-VITE_API_URL=http://localhost:5000/api/v1/
+VITE_API_URL=http://localhost:5000/api/v1/ or <backend_url>
 
 # backend
 PORT=5000
 MONGODB_URL=<your_mongodb_cluster_url or local_url>
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=http://localhost:5173 or <domain_url>
 ADMIN_EMAIL=<admin_email>
 TOKEN_SECRET=<your_token_secret>
 EMAIL_USER=<email>
