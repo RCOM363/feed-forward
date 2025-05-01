@@ -1,11 +1,6 @@
 name: Deploy to AWS S3 & CloudFront
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "frontend/**"
   workflow_run:
     workflows: [Run CI]
     types:
@@ -28,6 +23,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Check if frontend directory changed
+        id: changes
+        run: |
+          echo "CHANGED=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.workflow_run.head_sha }} | grep '^frontend/' || true)" >> $GITHUB_ENV
+
+      - name: Exit if no frontend changes
+        if: env.CHANGED == ''
+        run: |
+          echo "No changes in /frontend. Skipping deployment."
+          exit 0
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -44,6 +50,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to S3
+        if: env.CHANGED != ''
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
           args: --delete
@@ -55,6 +62,7 @@ jobs:
           SOURCE_DIR: frontend/dist
 
       - name: Invalidate CloudFront cache
+        if: env.CHANGED != ''
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
