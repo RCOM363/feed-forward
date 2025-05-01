@@ -23,27 +23,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-            - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: changed-files
-          path: .
-
-      - name: Check for frontend changes
-        id: frontend-check
-        run: |
-          if grep '^frontend/' changed_files.txt; then
-            echo "Frontend changed"
-            echo "DEPLOY=true" >> $GITHUB_ENV
-          else
-            echo "No frontend changes"
-            echo "DEPLOY=false" >> $GITHUB_ENV
-          fi
-
-      - name: Exit if no frontend changes
-        if: env.DEPLOY == 'false'
-        run: exit 0
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
