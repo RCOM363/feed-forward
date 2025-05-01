@@ -19,19 +19,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check if backend directory changed
-        id: changes
+            - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: changed-files
+          path: .
+
+      - name: Check for backend changes
+        id: backend-check
         run: |
-          echo "CHANGED=$(git diff-tree --no-commit-id --name-only -r ${{ github.event.workflow_run.head_sha }} | grep '^backend/' || true)" >> $GITHUB_ENV
+          if grep '^backend/' changed_files.txt; then
+            echo "Backend changed"
+            echo "DEPLOY=true" >> $GITHUB_ENV
+          else
+            echo "No backend changes"
+            echo "DEPLOY=false" >> $GITHUB_ENV
+          fi
 
       - name: Exit if no backend changes
-        if: env.CHANGED == ''
-        run: |
-          echo "No changes in /backend. Skipping deployment."
-          exit 0
+        if: env.DEPLOY == 'false'
+        run: exit 0
 
       - name: Deploy on EC2
-        if: env.CHANGED != ''
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
