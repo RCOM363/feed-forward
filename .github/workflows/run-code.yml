@@ -34,21 +34,3 @@ jobs:
       - name: Check running containers
         run: docker ps
 
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: changed-files
-          path: .
-
-      - name: Get list of changed files
-        id: changed
-        run: |
-          git fetch origin main
-          git diff --name-only origin/main > changed_files.txt
-          cat changed_files.txt
-
-      - name: Upload changed files list
-        uses: actions/upload-artifact@v3
-        with:
-          name: changed-files
-          path: changed_files.txt
