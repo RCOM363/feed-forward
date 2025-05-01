@@ -33,7 +33,3 @@ jobs:
 
       - name: Check running containers
         run: docker ps
-
-      - name: Shutdown docker containers
-        run: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
-        if: always() # containers are stopped even if previous steps fail
