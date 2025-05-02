@@ -8,7 +8,7 @@ export const loginLimiter = rateLimit({
 });
 
 export const signUpLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
+  windowMs: 10 * 60 * 1000,
   max: 5,
   message: "Too many signups from this IP. Try again in an hour.",
 });
