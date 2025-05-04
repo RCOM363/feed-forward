@@ -28,6 +28,29 @@ FeedForward is a food donation platform built using the MERN stack, designed to 
 ![ec2](https://img.shields.io/badge/Amazon%20EC2-FF9900.svg?style=for-the-badge&logo=Amazon-EC2&logoColor=white)
 ![docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
 
+## Demo Credentials:
+
+### **City Admin**
+
+```bash
+username: cityadmin-demo
+password: cityadmin123
+```
+
+### **Donor**
+
+```bash
+username: donor-demo
+password: donor123
+```
+
+### **Recipient**
+
+```bash
+username: recipient-demo
+password: recipient123
+```
+
 ## Table of Contents
 
 - [Features](https://github.com/RCOM363/feed-forward#features)
