@@ -36,7 +36,7 @@ const Home = () => {
           {/* Left Content */}
           <div className="lg:w-1/2 space-y-4 sm:space-y-6 text-center lg:text-left ">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight">
-              <span className="text-gray-800">Save Food,</span><br />
+              <span className="text-gray-800">Save Food</span><br />
               <span className="text-green-600 animate-pulse">Save Life</span>
             </h1>
             <p className="mt-2 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-800 max-w-prose mx-auto lg:mx-0">
