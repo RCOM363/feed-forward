@@ -7,8 +7,17 @@ services:
     command: ["node", "src/index.js"]
     ports:
       - "5000:5000"
-    env_file:
-      - ./backend/.env
+    environment:
+      - PORT=${PORT}
+      - MONGODB_URL=${MONGODB_URL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - TOKEN_SECRET=${TOKEN_SECRET}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_APP_PASS=${EMAIL_APP_PASS}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
     depends_on:
       - email-worker-prod
     restart: always
@@ -19,8 +28,17 @@ services:
       dockerfile: Dockerfile
       target: prod
     command: ["node", "src/workers/emailWorker.js"]
-    env_file:
-      - ./backend/.env
+    environment:
+      - PORT=${PORT}
+      - MONGODB_URL=${MONGODB_URL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - TOKEN_SECRET=${TOKEN_SECRET}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_APP_PASS=${EMAIL_APP_PASS}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
     depends_on:
       - redis
     restart: always
